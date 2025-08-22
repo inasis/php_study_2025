@@ -1,225 +1,303 @@
-## PHP 설치
-웹 페이지를 만들기 위하여 Thread-Safe 버전인 php-8.4.11-Win32-vs17-x64.zip 을 사용합니다.
-접근이 편리한 위치에 압축 해제합니다.
+# PHP 기초 가이드
 
-예) C:\php-8.4.11-Win32-vs17-x64
+## PHP 개발 환경 설정하기
 
-위와 동일한 위치에 압축해제한 경우 아래의 명령어를 CMD에 입력하면 PHP 서버가 실행됩니다.
-```shell
+웹 개발을 위해 Thread-Safe 버전인 `php-8.4.11-Win32-vs17-x64.zip` 파일을 다운로드한 후, 작업하기 편한 위치에 압축을 풀어주세요.
+
+**설치 경로 예시:**
+```
+C:\php-8.4.11-Win32-vs17-x64
+```
+
+### PHP 서버 실행하기
+
+명령 프롬프트(CMD)를 열고 다음 명령어를 입력하면 PHP 개발 서버가 시작됩니다:
+
+```bash
 C:
 cd C:\php-8.4.11-Win32-vs17-x64
 php -S localhost:8000
 ```
 
-Ctrl + C로 PHP 서버를 종료할 수 있습니다.
+서버를 종료하고 싶을 때는 `Ctrl + C`를 누르면 됩니다.
 
-php-8.4.11-Win32-vs17-x64 폴더에 프로젝트명으로 폴더를 생성합니다.
-이번은 htdocs로 폴더를 만들었습니다.
+### 프로젝트 폴더 구조 만들기
 
-아래의 명령어를 CMD에 입력하면 PHP 서버가 실행됩니다.
-```shell
+php-8.4.11-Win32-vs17-x64 폴더 안에 프로젝트용 폴더를 만들어주세요. 여기서는 `htdocs`라는 이름으로 만들겠습니다.
+
+```bash
 php -S localhost:8000 -t htdocs
 ```
-localhost:8000 을 Chrome에 입력하면 htdocs 폴더의 index.php가 실행됩니다.
 
+이제 브라우저에서 `localhost:8000`을 입력하면 `htdocs` 폴더의 `index.php` 파일이 실행됩니다.
 
-## PHP 시작 태그
+## PHP 문법 기초
+
+### PHP 코드 작성하기
+
+PHP 코드는 `<?php`로 시작해서 `?>`로 끝납니다:
+
 ```php
 <?php
-  echo "Hello, PHP!";
+  echo "Hello world, Welcome to PHP!";
+?>
 ```
-- `<?php ` 와 `?>` 사이에 PHP 코드를 작성합니다.
-- HTML과 함께 사용 가능합니다.
-- PHP 코드만으로 작성하는 경우 `<?php ` 로 시작하고, 마지막 닫는 괄호를 작성하지 않습니다.
 
-## PHP 주석
+**알아두면 좋은 팁:**
+- HTML과 PHP를 함께 사용할 수 있습니다
+- 순수 PHP 파일의 경우 마지막 `?>`는 생략하는 것이 관례입니다
+
+### 주석 작성하기
+
+코드에 설명을 달고 싶을 때는 주석을 사용합니다:
+
 ```php
-// 한 줄 주석
-# 한 줄 주석
+// 이것은 한 줄 주석입니다
+# 이것도 한 줄 주석이에요
+
 /*
-여러 줄
-주석
+이렇게 여러 줄에 걸쳐
+주석을 작성할 수도 있습니다
 */
 ```
-주석은 보통 //와 /* */ 를 대중적으로 사용합니다.
 
-## 변수와 데이터 타입
+개발자들은 주로 `//`와 `/* */`를 많이 사용합니다.
+
+## 변수와 데이터 다루기
+
+### 변수 선언하기
+
+PHP에서 변수는 `$` 기호로 시작합니다. 타입을 미리 선언할 필요가 없습니다.
+
 ```php
-$name = "John";       // 문자열
-$age = 25;            // 정수
-$height = 175.5;      // 실수
-$isStudent = true;    // 불리언
+$userName = "김민수";        // 문자열
+$userAge = 28;              // 정수
+$userHeight = 175.8;        // 실수
+$isLoggedIn = true;         // 불리언(참/거짓)
 ```
 
-- `$` 기호로 시작합니다
-- 타입 선언 없이 사용 가능합니다
-- PHP 헬퍼 함수 `var_dump($변수)`로 타입과 값을 확인할 수 있습니다.
-
-- declare(strict_types=1); 을 최상단에 사용하면 자동 형변환을 금지하게 됩니다.
+**변수 확인하기:**
 ```php
-declare(strict_types=1);
-
-$variable = "Doe";    // 문자열
- // 일반적인 경우 아래는 "25"로 변환되지만 declare(strict_types=1); 으로 오류 발생
-$variable = 25;      
+var_dump($userName);  // 변수의 타입과 값을 자세히 보여줍니다
 ```
 
-## 상수
+**엄격한 타입 검사 사용하기:**
 ```php
-define("SITE_NAME", "My site");
-echo SITE_NAME;
+declare(strict_types=1);  // 파일 코드 최상단에 작성해야 합니다
+
+$score = "85";      // 문자열
+$score = 85;        // 일반적으로는 자동 변환되지만, strict_types=1 모드에서는 오류 발생
 ```
-- `define()` 으로 상수 선언
-- 한 번 정의하면 변경이 불가능합니다
-- 코드를 실행하는 로직에 존재하는 경우에만 정의됩니다.
+
+### 상수 정의하기
+
+한 번 정하면 변경되지 않는 값을 상수라고 합니다:
+
+```php
+define("WEBSITE_NAME", "웹사이트 이름");
+echo WEBSITE_NAME;  // "웹사이트 이름" 출력
+```
+
+**주의사항:** 상수는 실제로 실행되는 코드 부분에서만 정의됩니다:
 
 ```php
 $number = 5;
-
 if($number == 3) {
-    define("DEFINED_NUMBER", 3);
+    define("MY_CONSTANT", 100);  // 이 코드는 실행되지 않음
 }
-
-echo DEFINED_NUMBER * 5; // 오류, if 문 안의 코드는 실행되지 않았기 때문입니다.
+echo MY_CONSTANT * 2;  // 오류 발생!
 ```
 
+## 화면에 출력하기
 
-## 출력
 ```php
-echo "안녕하세요";
+echo "화면에 글자를 보여줍니다";
 ```
-- `echo`로 문자열을 출력합니다.
 
----
+`echo`를 사용하면 웹 페이지에 텍스트나 HTML을 출력할 수 있습니다.
 
-## 연산자
+## 계산하기 (연산자)
+
+PHP로 다양한 계산을 할 수 있습니다:
+
 ```php
 $a = 10;
 $b = 3;
 
-echo $a + $b; // 덧셈
-echo $a % $b; // 나머지
-echo $a ** $b; // 거듭제곱
+echo $a + $b;   // 13 (덧셈)
+echo $a - $b;   // 7 (뺄셈)
+echo $a * $b;   // 30 (곱셈)
+echo $a / $b;   // 3.33... (나눗셈)
+echo $a % $b;   // 1 (나머지)
+echo $a ** $b;  // 1000 (거듭제곱: 10의 3제곱)
 ```
-- 산술, 비교(`==`, `===`), 논리(`&&`, `||`, `!`) 연산자 또한 지원합니다
 
----
+**비교와 논리 연산자:**
+- `==` : 값이 같은지 확인
+- `===` : 값과 타입이 모두 같은지 확인
+- `&&` : 그리고(AND)
+- `||` : 또는(OR)
+- `!` : 아니다(NOT)
 
-## 조건문
+## 조건에 따라 다르게 실행하기
+
+사용자의 나이에 따라 다른 메시지를 보여주는 예시입니다:
+
 ```php
+$age = 20;
+
 if ($age >= 18) {
-    echo "성인";
+    echo "성인입니다";
 } elseif ($age >= 13) {
-    echo "청소년";
+    echo "청소년입니다";
 } else {
-    echo "어린이";
+    echo "어린이입니다";
 }
 ```
-- `if`, `elseif`, `else` 사용
-- 삼항 연산자:  
-  ```php
-  $result = ($age >= 18) ? "성인" : "미성년자";
-  ```
 
----
-
-## 반복문
+**간단한 조건문 (삼항 연산자):**
 ```php
-for ($i = 0; $i < 5; $i++) {
-    echo $i;
-}
-
-$counter = 0;
-while ($counter < 3) {
-    echo $counter;
-    $counter++;
-}
-
-$fruits = ["사과", "바나나", "포도"];
-foreach ($fruits as $fruit) {
-    echo $fruit;
-}
+$message = ($age >= 18) ? "성인" : "미성년자";
+echo $message;
 ```
-- `for`, `while`, `foreach` 를 지원합니다.
-- `foreach`는 배열에 최적화되어 있습니다
 
----
+## 반복 작업 자동화하기
 
-## 배열
+### for 반복문 - 정해진 횟수만큼 반복
 ```php
-// 인덱스 배열
-$colors = ["빨강", "파랑", "초록"];
-echo $colors[0];
-
-// 연관 배열
-$user = ["name" => "Amy", "age" => 21];
-echo $user["name"];
+for ($i = 1; $i <= 5; $i++) {
+    echo "현재 숫자: {$i}<br>";
+}
 ```
-- 배열 함수: `count()`, `array_push()`, `array_merge()`
 
----
-
-## 함수
+### while 반복문 - 조건이 맞는 동안 계속 반복
 ```php
-function greet($name = "김짱구"): string {
-    return "안녕하세요, {$name}님!";
+$count = 1;
+while ($count <= 3) {
+    echo "카운트: {$count}<br>";
+    $count++;
+}
+```
+
+### foreach 반복문 - 배열의 모든 항목 처리
+```php
+$hobbies = ["독서", "영화감상", "요리", "여행"];
+foreach ($hobbies as $hobby) {
+    echo "취미: {$hobby}<br>";
+}
+```
+
+## 배열로 여러 데이터 관리하기
+
+### 순서가 있는 배열 (인덱스 배열)
+```php
+$colors = ["빨강", "파랑", "초록", "노랑"];
+echo $colors[0];  // "빨강" 출력 (첫 번째 항목)
+echo $colors[2];  // "초록" 출력 (세 번째 항목)
+```
+
+### 이름으로 관리하는 배열 (연관 배열)
+```php
+$student = [
+    "name" => "이영희",
+    "age" => 22,
+    "major" => "컴퓨터공학"
+];
+
+echo $student["name"];   // "이영희"
+echo $student["major"];  // "컴퓨터공학"
+```
+
+**유용한 배열 함수들:**
+- `count($배열)` : 배열의 길이 확인
+- `array_push($배열, 새항목)` : 배열에 새 항목 추가
+- `array_merge($배열1, $배열2)` : 두 배열 합치기
+
+## 함수로 코드 재사용하기
+
+반복되는 코드를 함수로 만들어 효율적으로 관리할 수 있습니다:
+
+```php
+function createGreeting($name = "방문자"): string {
+    return "안녕하세요, {$name}님! 좋은 하루 되세요!";
 }
 
-echo greet(); // 안녕하세요, 김짱구님!
-echo greet("이철수");  // 안녕하세요, 이철수님!
+echo createGreeting();           // "안녕하세요, 방문자님! 좋은 하루 되세요!"
+echo createGreeting("홍길동");    // "안녕하세요, 홍길동님! 좋은 하루 되세요!"
 ```
-- `function` 키워드로 정의
-- 매개변수 기본값을 정의할 수 있습니다
 
+**함수의 구성 요소:**
+- `function` : 함수를 만든다는 키워드
+- 매개변수에 기본값 설정 가능
+- `: string` : 반환 타입 명시 (선택사항)
 
-## include와 require
+## 파일 나누어 관리하기
+
+코드가 길어지면 여러 파일로 나누어 관리하는 것이 좋습니다:
+
 ```php
-include 'header.php';
-require 'config.php';
+include 'header.php';    // 파일이 없어도 경고만 하고 계속 실행
+require 'config.php';    // 파일이 없으면 오류를 내고 중단
 ```
-- `include`: 파일 불러오기, 파일이 없으면 경고하고 계속 실행합니다.
-- `require`: 파일 불러오기. 파일이 없으면 오류를 내고 종료합니다
 
+**차이점:**
+- `include` : 파일을 찾지 못해도 프로그램이 계속 실행됩니다
+- `require` : 파일을 반드시 필요로 하며, 없으면 프로그램이 중단됩니다
 
-## public과 src 분리
+## 프로젝트 구조 개선하기
+
+실제 웹 프로젝트에서는 public 폴더와 src 폴더를 분리하는 것이 좋습니다:
+
+**폴더 구조:**
+```
+htdocs/
+├── public/
+│   └── index.php
+└── src/
+    └── index.php
+```
+
+**public/index.php:**
 ```php
 <?php
 declare(strict_types=1);
 require '../vendor/autoload.php';
-
 require '../src/index.php';
 ```
 
-```shell
+**서버 실행:**
+```bash
 php -S localhost:8000 -t htdocs/public
 ```
-localhost:8000 을 Chrome에 입력하면 htdocs/public 폴더의 index.php가 실행됩니다.
-index.php는 src 폴더의 index.php 파일을 불러오게 됩니다.
 
+이제 브라우저에서 `localhost:8000`을 입력하면 public 폴더의 index.php가 실행되고, 이 파일이 src 폴더의 실제 코드를 불러옵니다.
 
-## Composer init로 생성된 composer.json 파일
+## Composer로 패키지 관리하기
+
+Composer는 PHP의 패키지 관리 도구입니다. `composer init` 명령으로 생성된 설정 파일 예시입니다:
+
+**composer.json:**
 ```json
 {
-    "name": "inas/sample", // "사용자명/프로젝트명"으로 만들어집니다.
+    "name": "myname/awesome-project",
+    "description": "PHP 프로젝트",
     "autoload": {
         "psr-4": {
-            "Inas\\sample\\": "src/"  // src를 프로젝트 폴더로 정합니다.
+            "MyName\\AwesomeProject\\": "src/"
         }
-    }, // require 부분은 일반적으로 composer가 직접 작성합니다.
+    },
     "require": {
         "nesbot/carbon": "^3.10"
     }
 }
 ```
 
-
-## Composer Autoload 예시
+**외부 라이브러리 사용 예시:**
 ```php
 require 'vendor/autoload.php';
-
 use Carbon\Carbon;
 
-echo Carbon::now();
+echo Carbon::now()->format('Y년 m월 d일');  // 현재 날짜를 한국어 형식으로 출력
 ```
-- `composer require nesbot/carbon` 설치 후 사용 가능
-- `autoload.php`파일으로 라이브러리 자동 로드
+
+Carbon은 날짜와 시간을 쉽게 다룰 수 있게 해주는 라이브러리입니다. `composer require nesbot/carbon` 명령으로 설치할 수 있습니다.
