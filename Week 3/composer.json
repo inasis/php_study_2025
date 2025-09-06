@@ -1,0 +1,10 @@
+{
+    "require": {
+        "illuminate/database": "^12.26"
+    },
+    "autoload": {
+        "PSR-4": {
+            "Proj\\":"eloquent/"
+        }
+    }
+}
