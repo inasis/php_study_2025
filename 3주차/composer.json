@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Citrus\\":"src/"
+        }
+    },
+    "require": {
+        "illuminate/database": "^12.26"
+    }
+}

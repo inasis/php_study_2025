@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Bread\\": "src/"
+        }
+    },
+    "require": {
+        "nesbot/carbon": "^3.10"
+    }
+}
