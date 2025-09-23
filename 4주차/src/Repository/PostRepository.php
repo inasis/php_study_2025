@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Donut\Repository;
 
-use Donut\Model\Post;
+use Donut\Entity\Post;
 
 class PostRepository
 {
