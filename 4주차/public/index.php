@@ -8,7 +8,7 @@ use Donut\Controller\PostController;
 $controller = $container->get(PostController::class);
 
 // POST 없이 임의로 글을 생성합니다.
-$controller->create("새로운 글", "테스트를 위한 컨텐츠");
+$controller->create(['title' => 'test', 'content' => 'lorem ipsum dolor sit amet']);
 
 // POST /posts - 생성
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SERVER['REQUEST_URI'] === '/posts') {
