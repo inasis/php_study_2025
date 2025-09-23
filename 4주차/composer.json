@@ -1,0 +1,11 @@
+{
+    "require": {
+        "illuminate/database": "^12.26",
+        "php-di/php-di": "^7.1"
+    },
+    "autoload": {
+        "PSR-4": {
+            "Donut\\":"src/"
+        }
+    }
+}
