@@ -9,7 +9,7 @@ use Donut\Validation\Attribute\MinLength;
 readonly class PostCreateDTO
 {
     public function __construct(
-        #[NotNull, MinLength(5)]
+        #[NotNull, MinLength(4)]
         public string $title,
         #[NotNull]
         public string $content
