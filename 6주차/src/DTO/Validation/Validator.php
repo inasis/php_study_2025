@@ -3,14 +3,11 @@ declare(strict_types=1);
 
 namespace Fondue\DTO\Validation;
 
-use Exception;
-use ReflectionClass;
-
 class Validator
 {
     public function validate(object $dto): void
     {
-        $reflection = new ReflectionClass($dto);
+        $reflection = new \ReflectionClass($dto);
 
         foreach ($reflection->getProperties() as $property) {
             $attributes = $property->getAttributes();
