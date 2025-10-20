@@ -1,20 +1,20 @@
 <?php
-declare(strict_types=1);
 
 namespace Fondue\Exception\Http;
 
-use Fondue\Exception\HttpException;
-
 /**
  * 400 Bad Request
+ * 유효하지 않은 입력으로 클라이언트의 요청이 잘못되었을 때 발생
  */
-class BadRequestException extends \Exception
+class BadRequestException extends HttpException
 {
     public function __construct(
         string $message = "Bad request",
+        int $code = 0,
+        ?\Throwable $previous = null,
         array $headers = [],
-        ?\Throwable $previous = null
+        array $context = []
     ) {
-        parent::__construct($message, 400, $headers, $previous);
+        parent::__construct(400, $message, $code, $previous, $headers, $context);
     }
 }

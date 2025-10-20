@@ -1,17 +1,20 @@
 <?php
-declare(strict_types=1);
 
 namespace Fondue\Exception\Http;
 
-use Fondue\Exception\HttpException;
-
+/**
+ * 404 Not Found
+ * 리소스를 찾을 수 없을 때 발생
+ */
 class NotFoundException extends HttpException
 {
     public function __construct(
         string $message = "Not found",
+        int $code = 0,
+        ?\Throwable $previous = null,
         array $headers = [],
-        ?\Throwable $previous = null
+        array $context = []
     ) {
-        parent::__construct($message, 404, $headers, $previous);
+        parent::__construct(404, $message, $code, $previous, $headers, $context);
     }
 }

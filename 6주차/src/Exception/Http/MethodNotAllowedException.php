@@ -1,31 +1,20 @@
 <?php
-declare(strict_types=1);
 
 namespace Fondue\Exception\Http;
 
-use Fondue\Exception\HttpException;
-
+/**
+ * 405 Method Not Allowed
+ * 요청된 리소스에 대해 허용되지 않은 HTTP 메서드를 사용했을 때 발생
+ */
 class MethodNotAllowedException extends HttpException
 {
-    private array $allowedMethods;
-    
     public function __construct(
-        array $allowedMethods = [],
         string $message = "Method not allowed",
-        ?\Throwable $previous = null
+        int $code = 0,
+        ?\Throwable $previous = null,
+        array $headers = [],
+        array $context = []
     ) {
-        $this->allowedMethods = $allowedMethods;
-        
-        $headers = [];
-        if (!empty($allowedMethods)) {
-            $headers['Allow'] = implode(', ', $allowedMethods);
-        }
-        
-        parent::__construct($message, 405, $headers, $previous);
-    }
-    
-    public function getAllowedMethods(): array
-    {
-        return $this->allowedMethods;
+        parent::__construct(405, $message, $code, $previous, $headers, $context);
     }
 }
