@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Fondue\Service;
 
 use Fondue\Repository\PostRepositoryInterface;
-use Fondue\DTO\PostCreateDTO;
-use Fondue\DTO\PostResponseDTO;
-use Fondue\DTO\PostReadDTO;
-use Fondue\DTO\PostUpdateDTO;
-use Fondue\DTO\PostDeleteDTO;
+use Fondue\DTO\Post\PostCreateDTO;
+use Fondue\DTO\Post\PostResponseDTO;
+use Fondue\DTO\Post\PostReadDTO;
+use Fondue\DTO\Post\PostUpdateDTO;
+use Fondue\DTO\Post\PostDeleteDTO;
 use Fondue\Exception\Http\NotFoundException;
 use Fondue\Exception\Http\BadRequestException;
 
@@ -18,8 +18,6 @@ class PostService
 
     /**
      * 새 게시물을 생성하고 응답 DTO를 반환합니다.
-     * 
-     * @throws \Exception 데이터베이스 오류 등
      */
     public function createPost(PostCreateDTO $dto): PostResponseDTO
     {
@@ -27,11 +25,6 @@ class PostService
             'title' => $dto->title,
             'content' => $dto->content,
         ]);
-
-        // Repositoroy가 실패했는데도 예외를 던지지 않은 경우 비정상적인 실패로 간주하고 500 예외를 던집니다.
-        if (!$post) {
-            throw new \RuntimeException("Failed to create post in repository."); 
-        }
 
         return new PostResponseDTO($post->id, $post->title, $post->content);
     }
@@ -48,8 +41,8 @@ class PostService
         
         // 게시물이 없으면 404 예외를 던집니다.
         if (!$post) {
-            throw new NotFoundException("ID {$dto->id}에 해당하는 게시물을 찾을 수 없습니다.");
-        }
+            throw new NotFoundException("ID {$dto->id} 에 해당하는 게시물을 찾을 수 없습니다.");
+        };
 
         return new PostResponseDTO($post->id, $post->title, $post->content);
     }
@@ -59,7 +52,6 @@ class PostService
      * 
      * @throws NotFoundException ID에 해당하는 게시물이 없을 때
      * @throws BadRequestException 업데이트할 내용이 없을 때
-     * @throws \Exception 데이터베이스 오류 등
      */
     public function updatePost(PostUpdateDTO $dto): PostResponseDTO
     {
@@ -69,7 +61,7 @@ class PostService
         ]);
         
         if (!$post) {
-            throw new NotFoundException("ID {$dto->id}에 해당하는 게시물을 찾을 수 없습니다.");
+            throw new NotFoundException("ID {$dto->id} 에 해당하는 게시물을 찾을 수 없습니다.");
         }
 
         // 업데이트할 데이터를 DTO에서 가져옵니다.
@@ -88,11 +80,6 @@ class PostService
         // 데이터에 문제가 없다면 업데이트를 실행합니다.
         $updatedPost = $this->postRepository->update($post, $dataToUpdate);
 
-        // Repositoroy가 실패했는데도 예외를 던지지 않은 경우 비정상적인 실패로 간주하고 500 예외를 던집니다.
-        if (!$updatedPost) {
-            throw new \RuntimeException("Failed to update post ID {$dto->id} in repository."); 
-        }
-
         return new PostResponseDTO(
             $updatedPost->id,
             $updatedPost->title,
@@ -104,7 +91,6 @@ class PostService
      * 특정 게시물을 삭제합니다.
      * 
      * @throws NotFoundException 게시물이 없을 때
-     * @throws \Exception 데이터베이스 오류 등
      */
     public function deletePost(PostDeleteDTO $dto): void
     {
@@ -120,10 +106,5 @@ class PostService
 
         // 게시물을 삭제합니다
         $isDeleted = $this->postRepository->delete($post);
-
-        // Repositoroy가 실패했는데도 예외를 던지지 않은 경우 비정상적인 실패로 간주하고 500 예외를 던집니다.
-        if (!$isDeleted) {
-            throw new \RuntimeException("Failed to delete post ID {$dto->id} in repository.");
-        }
     }
 }
