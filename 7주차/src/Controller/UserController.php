@@ -35,7 +35,6 @@ class UserController
     public function read($vars): ?array
     {
         $auth = $this->authMiddleware->authenticate();
-        var_dump($auth);
 
         $dto = new UserReadDTO($auth->email);
 

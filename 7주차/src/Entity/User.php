@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property string $email
  * @property string $name
- * @property string $password_hash
+ * @property string $password
  * @property DateTimeInterface $created_at
  * @property DateTimeInterface $updated_at
  */
 class User extends Model
 {
-    protected $table = 'users';
     protected $primaryKey = 'email';
+    protected $table = 'users';
     public $incrementing = false;
 
     // 기본 키의 데이터 타입은 문자열입니다

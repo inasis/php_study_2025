@@ -4,14 +4,12 @@ declare(strict_types=1);
 namespace Ginger\Service;
 
 use Ginger\Repository\UserRepositoryInterface;
-use Ginger\DTO\User\UserLoginDTO;
 use Ginger\DTO\User\UserCreateDTO;
 use Ginger\DTO\User\UserReadDTO;
 use Ginger\DTO\User\UserUpdateDTO;
 use Ginger\DTO\User\UserDeleteDTO;
 use Ginger\DTO\User\UserResponseDTO;
 use Ginger\Exception\Http\BadRequestException;
-use Ginger\Exception\Validation\ValidationException;
 use Ginger\Exception\Runtime\UserNotFoundException;
 
 class UserService
@@ -81,9 +79,8 @@ class UserService
         $updateData = [];
 
         // 업데이트할 데이터를 DTO에서 가져옵니다.
-        if (isset($dto->name)) {
-            $updateData['name'] = $dto->name;
-        }
+        $updateData['name'] = $dto->name;
+        
         if (isset($data['password'])) {
             $updateData['password'] = password_hash($data['password'], PASSWORD_BCRYPT, ['cost' => 12]);
             unset($data['password']);

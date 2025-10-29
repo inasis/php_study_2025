@@ -35,7 +35,7 @@ $requestData = [
     'name' => 'Test User'
 ];
 try {
-    $register = $userController->register($vars, $requestData);
+    $register = $userController->create($vars, $requestData);
     $result = [
         'title' => '회원가입 성공',
         'result' => $register,
@@ -66,7 +66,7 @@ try {
         'message' => $login
     ];
 } catch (Exception $e) {
-    $result = [
+    $result2 = [
         'title' => '로그인 실패',
         'message' => $e->getMessage(),
     ];

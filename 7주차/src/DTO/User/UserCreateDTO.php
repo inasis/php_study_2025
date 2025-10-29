@@ -15,7 +15,7 @@ class UserCreateDTO
         public string $email,
 
         #[NotNull, MinLength(8)]
-        #[PasswordStrength(message: 'Password must include uppercase, lowercase, and a number.')]
+        #[PasswordStrength]
         public string $password,
         
         #[NotNull, MinLength(2), MaxLength(50)]

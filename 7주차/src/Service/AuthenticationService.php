@@ -41,7 +41,6 @@ class AuthenticationService
         // 마지막 로그인 시간 업데이트
         $this->userRepository->updateLastLogin($dto->email);
 
-        // toensArray가 제공하는 모든 값을 담을 필요성이 재고됩니다.
         $tokensArray = $this->jwtTokenService->generateTokenPair($dto->email);
         $tokensDto = new AuthTokensDTO(
             accessToken: $tokensArray['access_token'],
