@@ -82,10 +82,10 @@ if ($accessToken) {
         [
             'expires' => $accessExpiration,
             'path' => '/',
-            'domain' => null,       // 💡 localhost에서는 domain 설정 제거 (또는 null)
-            'secure' => false,      // 💡 수정: HTTP 환경이므로 false로 설정
+            'domain' => null,       // localhost에서는 domain 설정 제거
+            'secure' => false,      // 수정: HTTP 환경이므로 false로 설정
             'httponly' => true,
-            'samesite' => 'Lax',    // 💡 localhost 환경에서 테스트 용이성을 위해 Lax로 변경
+            'samesite' => 'Lax',    // localhost 환경에서 테스트 용이성을 위해 Lax로 변경
         ]
     );
 }
@@ -100,10 +100,10 @@ if ($refreshToken) {
         [
             'expires' => $refreshExpiration,
             'path' => '/token/refresh', // 재발급 엔드포인트에서만 사용
-            'domain' => null,       // 💡 localhost에서는 domain 설정 제거 (또는 null)
-            'secure' => false,      // 💡 수정: HTTP 환경이므로 false로 설정
+            'domain' => null,       // localhost에서는 domain 설정 제거
+            'secure' => false,      // 수정: HTTP 환경이므로 false로 설정
             'httponly' => true,
-            'samesite' => 'Lax',    // 💡 localhost 환경에서 테스트 용이성을 위해 Lax로 변경
+            'samesite' => 'Lax',    // localhost 환경에서 테스트 용이성을 위해 Lax로 변경
         ]
     );
 }
