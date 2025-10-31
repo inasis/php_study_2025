@@ -5,7 +5,7 @@ namespace Ginger\Controller\Middleware;
 
 use Ginger\Entity\User;
 use Ginger\Repository\UserRepository;
-use Ginger\Service\JwtServiceInterface; // 💡 새로운 의존성
+use Ginger\Service\JwtServiceInterface;
 use Throwable;
 
 class AuthMiddleware
