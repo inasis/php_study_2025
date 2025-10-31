@@ -18,8 +18,9 @@ class UserUpdateDTO
         public ?string $name = null,
 
         #[MinLength(8), PasswordStrength]
-        public ?string $newPassword = null,
-        public ?string $currentPassword = null
+        public ?string $password = null,
+
+        public ?string $updated_at = null
     ) {}
     
     /**

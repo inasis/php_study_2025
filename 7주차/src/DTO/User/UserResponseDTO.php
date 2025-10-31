@@ -8,6 +8,8 @@ use Ginger\Entity\User;
 readonly class UserResponseDTO
 {
     public string $email;
+
+    public string $password;
     public string $name;
     public string $createdAt;
     public string $updatedAt;
@@ -15,6 +17,7 @@ readonly class UserResponseDTO
     public function __construct(User $user)
     {
         $this->email = $user->email;
+        $this->name = $user->password;
         $this->name = $user->name;
         $this->createdAt = $user->created_at->format('Y-m-d H:i:s');
         $this->updatedAt = $user->updated_at->format('Y-m-d H:i:s');

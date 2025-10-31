@@ -6,10 +6,9 @@ namespace Ginger\Repository;
 use Ginger\Entity\Post;
 use Ginger\Exception\Infrastructure\DatabaseException; 
 use Exception;
-use Illuminate\Contracts\Support\MessageBag;
 use Throwable;
 
-class PostRepository implements PostRepositoryInterface
+class PostRepository
 {
     /**
      * @param array $data 

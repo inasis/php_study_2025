@@ -4,20 +4,16 @@ declare(strict_types=1);
 namespace Ginger\Repository;
 
 use Ginger\Entity\User;
-use Ginger\Repository\UserRepositoryInterface;
 use Ginger\Exception\Infrastructure\DatabaseException; 
 use Illuminate\Database\Eloquent\Collection;
 use Exception;
 use Throwable;
 
-class UserRepository implements UserRepositoryInterface
+class UserRepository
 {
-    private User $userModel;
-
-    public function __construct(User $userModel)
-    {
-        $this->userModel = $userModel;
-    }
+    public function __construct(
+        private User $user
+    ) {}
 
     /**
      * 모든 사용자 조회
@@ -25,8 +21,8 @@ class UserRepository implements UserRepositoryInterface
      */
     public function getAll(): Collection
     {
-        // $this->userModel::all() 이나 $this->userModel->orderBy(...) 사용
-        return $this->userModel->newQuery()
+        // $this->user::all() 이나 $this->user->orderBy(...) 사용
+        return $this->user->newQuery()
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -37,7 +33,7 @@ class UserRepository implements UserRepositoryInterface
     public function create(array $data): User
     {
         // fillable 속성을 이용한 대량 할당 (Mass Assignment)
-        $user = $this->userModel->create([
+        $user = $this->user->create([
             'email' => $data['email'],
             'name' => $data['name'],
             'password' => $data['passwordHash'],
@@ -86,7 +82,7 @@ class UserRepository implements UserRepositoryInterface
     public function delete(string $email): bool
     {
         // 쿼리 빌더를 사용하여 직접 삭제
-        return $this->userModel->newQuery()
+        return $this->user->newQuery()
             ->where('email', $email)
             ->delete() > 0; // 삭제된 행의 개수 반환`
     }
@@ -99,7 +95,7 @@ class UserRepository implements UserRepositoryInterface
         // 쿼리 빌더를 사용하여 updated_at을 업데이트
         $currentTime = date('Y-m-d H:i:s');
 
-        return $this->userModel->newQuery()
+        return $this->user->newQuery()
             ->where('email', $email)
             ->update([
                 'updated_at' => $currentTime, // updated_at도 함께 업데이트

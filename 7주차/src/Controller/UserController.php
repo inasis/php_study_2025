@@ -62,8 +62,7 @@ class UserController
             $dto = new UserUpdateDTO($auth);
             $dto->email = $targetEmail; 
             $dto->name = $requestData['name'] ?? null;
-            $dto->currentPassword = $requestData['current_password'] ?? null;
-            $dto->newPassword = $requestData['new_password'] ?? null;
+            $dto->password = $requestData['password'] ?? null;
 
             return $this->userService->updateUser($dto)->toArray();
         }

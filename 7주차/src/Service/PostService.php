@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ginger\Service;
 
-use Ginger\Repository\PostRepositoryInterface;
+use Ginger\Repository\PostRepository;
 use Ginger\DTO\Post\PostCreateDTO;
 use Ginger\DTO\Post\PostReadDTO;
 use Ginger\DTO\Post\PostUpdateDTO;
@@ -14,7 +14,9 @@ use Ginger\Exception\Http\BadRequestException;
 
 class PostService
 {
-    public function __construct(private readonly PostRepositoryInterface $postRepository) {}
+    public function __construct(
+        private readonly PostRepository $postRepository
+    ) {}
 
     /**
      * 새 게시물을 생성하고 응답 DTO를 반환합니다.

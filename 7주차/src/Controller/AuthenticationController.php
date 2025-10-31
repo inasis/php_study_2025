@@ -5,18 +5,18 @@ namespace Ginger\Controller;
 use Ginger\DTO\Auth\AuthLoginDTO;
 use Ginger\Service\AuthenticationService;
 use Ginger\Service\JwtServiceInterface;
-use Ginger\Repository\UserRepositoryInterface;
+use Ginger\Repository\UserRepository;
 
 class AuthenticationController
 {
     /**
      * @param AuthenticationService
-     * @param UserRepositoryInterface $userRepository
+     * @param UserRepository $userRepository
      * @param JwtServiceInterface $jwtService
      */
     public function __construct(
         private AuthenticationService $authenticationService,
-        private UserRepositoryInterface $userRepository,
+        private UserRepository $userRepository,
         private JwtServiceInterface $jwtService
     ) {}
     

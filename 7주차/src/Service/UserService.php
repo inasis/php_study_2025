@@ -3,19 +3,19 @@ declare(strict_types=1);
 
 namespace Ginger\Service;
 
-use Ginger\Repository\UserRepositoryInterface;
+use Ginger\Repository\UserRepository;
 use Ginger\DTO\User\UserCreateDTO;
 use Ginger\DTO\User\UserReadDTO;
 use Ginger\DTO\User\UserUpdateDTO;
 use Ginger\DTO\User\UserDeleteDTO;
 use Ginger\DTO\User\UserResponseDTO;
 use Ginger\Exception\Http\BadRequestException;
-use Ginger\Exception\Runtime\UserNotFoundException;
+use Ginger\Exception\Http\NotFoundException;
 
 class UserService
 {
     public function __construct(
-        private readonly UserRepositoryInterface $userRepository,
+        private readonly UserRepository $userRepository,
         private JwtServiceInterface $jwtService
     ) {}
 
@@ -56,7 +56,7 @@ class UserService
         ]);
 
         if (!$user) {
-            throw new UserNotFoundException("User not found");
+            throw new NotFoundException("User not found");
         }
 
         return new UserResponseDTO($user);
@@ -73,7 +73,7 @@ class UserService
         $user = $this->userRepository->read(['email' => $dto->email]);
         
         if (!$user) {
-            throw new UserNotFoundException("User not found");
+            throw new NotFoundException("User not found");
         }
         
         $updateData = [];
@@ -81,11 +81,14 @@ class UserService
         // 업데이트할 데이터를 DTO에서 가져옵니다.
         $updateData['name'] = $dto->name;
         
-        if (isset($data['password'])) {
-            $updateData['password'] = password_hash($data['password'], PASSWORD_BCRYPT, ['cost' => 12]);
-            unset($data['password']);
+        if (isset($dto->password)) {
+            $updateData['password'] = password_hash($dto->password, PASSWORD_BCRYPT, ['cost' => 12]);
         }
-        
+
+        if (isset($dto->updated_at)) {
+            $updateData['updated_at'] = $dto->updated_at;
+        }
+
         // 데이터에 문제가 없다면 업데이트를 실행합니다.
         $updateUser = $this->userRepository->update($user, $updateData);
 
@@ -101,7 +104,7 @@ class UserService
         $user = $this->userRepository->read(['email' => $dto->email]);
 
         if (!$user) {
-            throw new UserNotFoundException("User not found");
+            throw new NotFoundException("User not found");
         }
 
         $this->userRepository->delete($user->email);

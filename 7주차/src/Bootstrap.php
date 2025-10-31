@@ -54,8 +54,8 @@ class Bootstrap
         $containerBuilder = new ContainerBuilder();
 
         $containerBuilder->addDefinitions([
-            \Ginger\Repository\UserRepositoryInterface::class => \DI\autowire(\Ginger\Repository\UserRepository::class),
-            \Ginger\Repository\PostRepositoryInterface::class => \DI\autowire(\Ginger\Repository\PostRepository::class),
+            \Ginger\Repository\UserRepository::class => \DI\autowire(\Ginger\Repository\UserRepository::class),
+            \Ginger\Repository\PostRepository::class => \DI\autowire(\Ginger\Repository\PostRepository::class),
             \Ginger\Service\JwtServiceInterface::class => \DI\autowire(\Ginger\Infrastructure\Security\JwtService::class),
             \Ginger\Service\UserService::class => \DI\autowire(),
             \Ginger\Service\AuthenticationService::class => \DI\autowire(), 
