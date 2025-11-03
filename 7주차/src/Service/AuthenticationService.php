@@ -7,9 +7,8 @@ use Ginger\DTO\User\UserResponseDTO;
 use Ginger\DTO\Auth\AuthLoginDTO;
 use Ginger\DTO\Auth\AuthResponseDTO;
 use Ginger\DTO\Auth\AuthTokensDTO;
-use Ginger\DTO\User\UserReadDTO;
-use Ginger\DTO\User\UserUpdateDTO;
 use Ginger\Exception\Http\UnauthorizedException;
+use Ginger\Repository\UserRepository;
 
 /**
  * 사용자 인증 및 토큰 관리를 담당하는 서비스 클래스
@@ -17,7 +16,7 @@ use Ginger\Exception\Http\UnauthorizedException;
 class AuthenticationService
 {
     public function __construct(
-        private UserService $userService,
+        private UserRepository $userRepository,
         private JwtServiceInterface $jwtTokenService, 
     ) {}
 
@@ -29,34 +28,27 @@ class AuthenticationService
      * @throws UnauthorizedException 인증 실패 시
      */
     public function login(AuthLoginDTO $dto): AuthResponseDTO
-    {        
-        $user = $this->userService->readUser(
-            dto: new UserReadDTO(
-                email: $dto->email
-            )
-        );
-        
+    {
+        $user = $this->userRepository->read([
+            'email' => $dto->email
+        ]);
+
         // 사용자 검증 및 비밀번호 확인
-        if (!$user || !password_verify($dto->password, $user->password)) {
+        if (!$user || !$user->verifyPassword($dto->password)) {
             throw new UnauthorizedException('Invalid email or password');
         }
 
         // 마지막 로그인 시간 업데이트
-        $this->userService->updateUser(
-                dto: new UserUpdateDTO(
-                email: $dto->email,
-                updated_at: date(format: 'Y-m-d H:i:s')
-            )
-        );
+        $this->userRepository->update($user, [
+            'email' => $dto->email
+        ]);
 
-        $tokensArray = $this->jwtTokenService->generateTokenPair(
-            email: $dto->email
-        );
+        $tokensArray = $this->jwtTokenService->generateTokenPair($dto->email);
 
         // 응답 DTO 반환
         return new AuthResponseDTO(
             email: $user->email, 
-            name: $user->name, 
+            name: $user->name,
             tokens: new AuthTokensDTO(
                 accessToken: $tokensArray['access_token'],
                 refreshToken: $tokensArray['refresh_token']
@@ -103,11 +95,9 @@ class AuthenticationService
         }
 
         // 이메일로 사용자 정보 조회
-        $user = $this->userService->readUser(
-            dto: new UserReadDTO(
-                email: $email
-            )
-        );
+        $user = $this->userRepository->read([
+            'email' => $email
+        ]);
 
         if (!$user) {
             // 토큰에 있는 이메일의 사용자가 DB에 존재하지 않을 경우
@@ -115,6 +105,6 @@ class AuthenticationService
         }
 
         // 사용자 정보 DTO 반환
-        return $user;
+        return new UserResponseDTO($user);
     }
 }

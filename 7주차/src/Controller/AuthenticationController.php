@@ -42,22 +42,17 @@ class AuthenticationController
      */
     public function refresh($vars, $requestData): ?array
     {
-        $refreshToken = $requestData['refreshToken'] ?? null;
-        
-        if (empty($refreshToken)) {
+        if (empty($requestData['refreshToken'])) {
              return null;
         }
 
-        return $this->authenticationService->refresh($refreshToken)->toArray();
-
-        if (is_array($result) && isset($result['error'])) {
-            // 토큰 만료 또는 유효하지 않음
-            return null;
-        }
+        return $this->authenticationService->refresh($requestData['refreshToken'])->toArray();
     }
 
     // POST /auth/logout
     /**
+     * 사용자의 쿠키를 무효화하여 로그아웃을 진행합니다.
+     * 
      * @param array $vars 경로 변수
      * @param array $requestData 요청 본문 (필요 없을 수 있으나 구조 통일)
      * @param string|null $accessToken 미들웨어에서 추출되어 주입된 현재 액세스 토큰
@@ -65,10 +60,7 @@ class AuthenticationController
      */
     public function logout($vars, $requestData): array
     {
-        // 1. accessToken 쿠키 무효화
         $this->invalidateCookie('access_token', '/');
-        
-        // 2. refreshToken 쿠키 무효화
         $this->invalidateCookie('refresh_token', '/token/refresh');
 
         return [
@@ -77,23 +69,21 @@ class AuthenticationController
     }
 
     /**
-     * 지정된 쿠키를 즉시 만료시켜 무효화합니다.
+     * 지정된 쿠키의 만료 시간을 이전으로 돌려 즉시 무효화합니다.
+     * 
      * @param string $name 쿠키 이름
-     * @param string $path 쿠키 경로 (로그인 시 설정한 경로와 동일해야 함)
+     * @param string $path 쿠키 경로, 로그인 시 설정한 경로와 동일해야 합니다
      */
     private function invalidateCookie(string $name, string $path): void
     {
-        // 쿠키의 만료 시간을 현재 시각보다 훨씬 이전으로 설정합니다 (예: 1시간 전).
-        $pastTime = time() - 3600; 
-
         setcookie(
             $name, 
-            '', // 값을 비웁니다.
+            '',
             [
-                'expires' => $pastTime, 
+                'expires' => time() - 3600, 
                 'path' => $path,
-                'domain' => null,   // localhost 환경 설정 유지
-                'secure' => false,  // localhost 환경 설정 유지
+                'domain' => null,   // localhost를 위한 환경 설정
+                'secure' => false,  // localhost를 위한 환경 설정
                 'httponly' => true,
                 'samesite' => 'Lax',
             ]

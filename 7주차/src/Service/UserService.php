@@ -35,12 +35,10 @@ class UserService
             throw new BadRequestException("User already exists.");
         }
 
-        $passwordHash = password_hash($dto->password, PASSWORD_BCRYPT, ['cost' => 12]);
-
         $create = $this->userRepository->create([
             'email' => $dto->email,
             'name' => $dto->name,
-            'passwordHash' => $passwordHash
+            'passwordHash' => $dto->password,
         ]);
 
         return new UserResponseDTO($create);
@@ -79,14 +77,11 @@ class UserService
         $updateData = [];
 
         // 업데이트할 데이터를 DTO에서 가져옵니다.
-        $updateData['name'] = $dto->name;
-        
-        if (isset($dto->password)) {
-            $updateData['password'] = password_hash($dto->password, PASSWORD_BCRYPT, ['cost' => 12]);
+        if (isset($dto->name)) {
+            $updateData['name'] = $dto->name;
         }
-
-        if (isset($dto->updated_at)) {
-            $updateData['updated_at'] = $dto->updated_at;
+        if (isset($dto->password)) {
+            $updateData['password'] = $dto->password;
         }
 
         // 데이터에 문제가 없다면 업데이트를 실행합니다.

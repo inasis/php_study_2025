@@ -43,7 +43,10 @@ class UserController
                 return null;
             }
 
-            return $this->userService->readUser($dto)->toArray();
+            $user = $this->userService->readUser($dto)->toArray();
+            unset($user['password']);
+
+            return $user;
         }
         return null;
     }
