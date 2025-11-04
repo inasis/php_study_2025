@@ -25,8 +25,7 @@ readonly class UserResponseDTO
     /**
      * DTO의 public 속성을 포함하는 배열을 반환합니다.
      * 
-     *ㅣ
-     ㅔ * @return array
+     * @return array
      */
     public function toArray(): array
     {

@@ -17,20 +17,23 @@ class UserRepository implements UserRepositoryInterface
     ) {}
 
     /**
-     * 모든 사용자 조회
-     * @return UserInterface[]
+     * {@inheritdoc}
      */
     public function getAll(): array
     {
-        // Eloquent Collection을 가져와 PHP 배열로 변환
-        return $this->model->newQuery()
-            ->orderBy('created_at', 'desc')
-            ->get()
-            ->all();
+        try {
+            // Eloquent Collection을 가져와 PHP 배열로 변환
+            return $this->model->newQuery()
+                ->orderBy('created_at', 'desc')
+                ->get()
+                ->all();
+        } catch (Throwable $e) {
+            throw new DatabaseException("User 조회 중 오류가 발생했습니다: " . $e->getMessage(), 500, $e);
+        }
     }
 
     /**
-     * 사용자 생성
+     * {@inheritdoc}
      */
     public function create(array $data): UserInterface
     {
@@ -46,7 +49,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * 이메일로 사용자 조회
+     * {@inheritdoc}
      */
     public function read(string $email): ?UserInterface
     {
@@ -58,6 +61,9 @@ class UserRepository implements UserRepositoryInterface
         }
     }
     
+    /**
+     * {@inheritdoc}
+     */
     public function update(UserInterface $user, array $data): UserInterface
     {
         // $user가 실제로 Eloquent Model 인스턴스인지 확인하는 것이 안전합니다.
@@ -78,7 +84,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * 사용자 삭제
+     * {@inheritdoc}
      */
     public function delete(string $email): bool
     {
@@ -94,7 +100,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * 마지막 로그인 시간 업데이트
+     * {@inheritdoc}
      */
     public function updateLastLogin(string $email): bool
     {
