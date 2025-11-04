@@ -78,11 +78,9 @@ class PostController
      * @throws \Ginger\Exception\Validation\ValidationException 유효성 검사 실패 시
      * @throws \Ginger\Exception\Http\NotFoundException 게시글을 찾을 수 없을 때
      */
-    public function delete(array $data = []): bool
+    public function delete(int $id): bool
     {
-        $dto = new PostDeleteDTO(
-            (int)($data['id'] ?? 0),
-        );
+        $dto = new PostDeleteDTO($id);
         $this->validator->validate($dto);
         $this->postService->deletePost($dto);
         

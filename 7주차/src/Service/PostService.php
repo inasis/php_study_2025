@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ginger\Service;
 
-use Ginger\Repository\PostRepository;
+use Ginger\Repository\PostRepositoryInterface;
 use Ginger\DTO\Post\PostCreateDTO;
 use Ginger\DTO\Post\PostReadDTO;
 use Ginger\DTO\Post\PostUpdateDTO;
@@ -15,7 +15,7 @@ use Ginger\Exception\Http\BadRequestException;
 class PostService
 {
     public function __construct(
-        private readonly PostRepository $postRepository
+        private readonly PostRepositoryInterface $postRepository
     ) {}
 
     /**
@@ -43,9 +43,7 @@ class PostService
      */
     public function readPost(PostReadDTO $dto): PostResponseDTO
     {
-        $post = $this->postRepository->read([
-            'id' => $dto->id,
-        ]);
+        $post = $this->postRepository->read($dto->id);
         
         // 게시물이 없으면 404 예외를 던집니다.
         if (!$post) {
@@ -66,9 +64,7 @@ class PostService
     public function updatePost(PostUpdateDTO $dto): PostResponseDTO
     {
         // read()가 Post 객체 또는 null을 반환하여 게시물 존재 여부를 확인할 수 있습니다.
-        $post = $this->postRepository->read([
-            'id' => $dto->id,
-        ]);
+        $post = $this->postRepository->read($dto->id);
         
         if (!$post) {
             throw new NotFoundException("ID {$dto->id} 에 해당하는 게시물을 찾을 수 없습니다.");
@@ -105,9 +101,7 @@ class PostService
     public function deletePost(PostDeleteDTO $dto): void
     {
         // read()가 Post 객체 또는 null을 반환하여 게시물 존재 여부를 확인할 수 있습니다.
-        $post = $this->postRepository->read([
-            'id' => $dto->id,
-        ]);
+        $post = $this->postRepository->read($dto->id);
 
         // 게시물이 없으면 404 예외를 던집니다.
         if (!$post) {
@@ -115,6 +109,6 @@ class PostService
         }
 
         // 게시물을 삭제합니다
-        $isDeleted = $this->postRepository->delete($post);
+        $isDeleted = $this->postRepository->delete($dto->id);
     }
 }
