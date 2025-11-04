@@ -17,7 +17,6 @@ class AuthenticationController
         private JwtServiceInterface $jwtService
     ) {}
     
-    // POST /auth/login
     /**
      * @param array $vars FastRoute 등에서 넘어온 URI
      * @param array $requestData 라우터/미들웨어에서 JSON 본문을 파싱하여 주입한 데이터
@@ -34,7 +33,6 @@ class AuthenticationController
         return $this->authenticationService->login($dto)->toArray();
     }
 
-    // POST /auth/refresh
     /**
      * @param array $vars 경로 변수
      * @param array $requestData 리프레시 토큰 정보가 포함된 요청 본문
@@ -49,7 +47,6 @@ class AuthenticationController
         return $this->authenticationService->refresh($requestData['refreshToken'])->toArray();
     }
 
-    // POST /auth/logout
     /**
      * 사용자의 쿠키를 무효화하여 로그아웃을 진행합니다.
      * 
