@@ -53,18 +53,16 @@ class Bootstrap
     {
         $containerBuilder = new ContainerBuilder();
 
-        $containerBuilder->addDefinitions([
-            \Ginger\Repository\UserRepository::class => \DI\autowire(\Ginger\Repository\UserRepository::class),
-            \Ginger\Repository\PostRepository::class => \DI\autowire(\Ginger\Repository\PostRepository::class),
+        $containerBuilder->addDefinitions([ 
+            \Ginger\Repository\UserRepositoryInterface::class => \DI\autowire(\Ginger\Infrastructure\Persistence\Repository\UserRepository::class),
+            \Ginger\Repository\PostRepositoryInterface::class => \DI\autowire(\Ginger\Infrastructure\Persistence\Repository\PostRepository::class),
             \Ginger\Service\JwtServiceInterface::class => \DI\autowire(\Ginger\Infrastructure\Security\JwtService::class),
             \Ginger\Service\UserService::class => \DI\autowire(),
             \Ginger\Service\AuthenticationService::class => \DI\autowire(), 
             \Ginger\Controller\UserController::class => \DI\autowire(),
             \Ginger\Controller\PostController::class => \DI\autowire(),
-            \Ginger\Controller\JwksController::class => \DI\autowire(),
             \Ginger\DTO\Validation\Validator::class => \DI\autowire(),
             \Ginger\Controller\Middleware\AuthMiddleware::class => \DI\autowire(),
-            \Ginger\Controller\Middleware\NoopMiddleware::class => \DI\autowire(),
         ]);
 
         return $containerBuilder->build();
