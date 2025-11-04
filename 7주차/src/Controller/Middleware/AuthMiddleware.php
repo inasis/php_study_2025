@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace Ginger\Controller\Middleware;
 
 use Ginger\Entity\UserInterface;
-use Ginger\Repository\UserRepositoryInterface as UserRepository;
+use Ginger\Repository\UserRepositoryInterface;
 use Ginger\Service\JwtServiceInterface;
 use Throwable;
 
 class AuthMiddleware
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
+        private readonly UserRepositoryInterface $userRepository,
         private JwtServiceInterface $jwtService
     ) {}
 

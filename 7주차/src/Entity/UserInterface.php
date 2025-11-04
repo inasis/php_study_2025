@@ -18,7 +18,7 @@ interface UserInterface
     public function getCreatedAt(): \DateTimeInterface;
     public function getUpdatedAt(): \DateTimeInterface;
 
-    // 만약 도메인 엔티티가 상태를 변경해야 한다면, Setter 대신 명시적인 메서드를 정의할 수 있습니다.
+    // 만약 엔티티가 상태를 변경해야 한다면, Setter 대신 명시적인 메서드를 정의할 수 있습니다.
     // public function changeName(string $newName): void;
     // public function changePassword(string $newPlainPassword): void;
 }
