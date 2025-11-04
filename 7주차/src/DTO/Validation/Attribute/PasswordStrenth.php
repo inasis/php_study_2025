@@ -27,7 +27,7 @@ class PasswordStrength implements ValidatorInterface
         private ?string $lowerCaseMessage = null,
         private ?string $digitMessage = null
     ) {
-        // 기본 메시지 설정 (커스터마이징 되지 않았을 경우)
+        // 기본 메시지 설정
         $this->minLenMessage = $this->minLenMessage ?? "must be at least {$this->minLength} characters long";
         $this->upperCaseMessage = $this->upperCaseMessage ?? "must include at least one uppercase letter";
         $this->lowerCaseMessage = $this->lowerCaseMessage ?? "must include at least one lowercase letter";

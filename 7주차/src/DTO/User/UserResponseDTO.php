@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ginger\DTO\User;
 
-use Ginger\Entity\User;
+use Ginger\Entity\UserInterface;
 
 readonly class UserResponseDTO
 {
@@ -13,7 +13,7 @@ readonly class UserResponseDTO
     public string $createdAt;
     public string $updatedAt;
 
-    public function __construct(User $user)
+    public function __construct(UserInterface $user)
     {
         $this->email = $user->email;
         $this->password = $user->password;
@@ -25,7 +25,8 @@ readonly class UserResponseDTO
     /**
      * DTO의 public 속성을 포함하는 배열을 반환합니다.
      * 
-     * * @return array
+     *ㅣ
+     ㅔ * @return array
      */
     public function toArray(): array
     {

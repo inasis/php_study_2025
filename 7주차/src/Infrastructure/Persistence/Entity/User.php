@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Ginger\Entity;
+namespace Ginger\Infrastructure\Persistence\Entity;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -17,21 +17,17 @@ class User extends Model
 {
     protected $primaryKey = 'email';
     protected $table = 'users';
-    public $incrementing = false;
-
-    // 기본 키의 데이터 타입은 문자열입니다
     protected $keyType = 'string';
-
     protected $fillable = [
         'email',
         'name',
         'password',
     ];
-    
     protected $hidden = [
         'password',
     ];
 
+    public $incrementing = false;
     public $timestamps = true;
 
     /**

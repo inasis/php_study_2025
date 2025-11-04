@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Ginger\DTO\Auth;
 
 use Ginger\DTO\Validation\Attribute\Email;
-use Ginger\DTO\Validation\Attribute\MaxLength;
 use Ginger\DTO\Validation\Attribute\NotNull;
 
 // LoginRequest

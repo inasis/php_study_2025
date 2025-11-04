@@ -38,7 +38,7 @@ class UserController
 
         $dto = new UserReadDTO($auth->email);
 
-        if ($auth instanceof \Ginger\Entity\User) {
+        if ($auth instanceof \Ginger\Entity\UserInterface) {
             if ($dto->email !== $auth->email) {
                 return null;
             }
@@ -57,15 +57,16 @@ class UserController
         $targetEmail = $vars['email'];
         $auth = $this->authMiddleware->authenticate();
 
-        if ($auth instanceof \Ginger\Entity\User) {
+        if ($auth instanceof \Ginger\Entity\UserInterface) {
             if ($targetEmail !== $auth->email) {
                 return null;
             }
 
-            $dto = new UserUpdateDTO($auth);
-            $dto->email = $targetEmail; 
-            $dto->name = $requestData['name'] ?? null;
-            $dto->password = $requestData['password'] ?? null;
+            $dto = new UserUpdateDTO(
+                $targetEmail, 
+                $requestData['name'] ?? null,
+                $requestData['password'] ?? null
+            );
 
             return $this->userService->updateUser($dto)->toArray();
         }
@@ -78,7 +79,7 @@ class UserController
         $targetEmail = $vars['email'];
         $auth = $this->authMiddleware->authenticate();
         
-        if ($auth instanceof \Ginger\Entity\User) {
+        if ($auth instanceof \Ginger\Entity\UserInterface) {
             return true;
         }
         return false;

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Ginger\DTO\Auth;
 
-use Ginger\Entity\User;
 use Ginger\DTO\Validation\Attribute\Email;
 use Ginger\DTO\Validation\Attribute\MaxLength;
 use Ginger\DTO\Validation\Attribute\MinLength;

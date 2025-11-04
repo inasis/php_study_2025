@@ -8,7 +8,7 @@ use Ginger\DTO\Auth\AuthLoginDTO;
 use Ginger\DTO\Auth\AuthResponseDTO;
 use Ginger\DTO\Auth\AuthTokensDTO;
 use Ginger\Exception\Http\UnauthorizedException;
-use Ginger\Repository\UserRepository;
+use Ginger\Repository\UserRepositoryInterface as UserRepository;
 
 /**
  * 사용자 인증 및 토큰 관리를 담당하는 서비스 클래스
@@ -29,9 +29,7 @@ class AuthenticationService
      */
     public function login(AuthLoginDTO $dto): AuthResponseDTO
     {
-        $user = $this->userRepository->read([
-            'email' => $dto->email
-        ]);
+        $user = $this->userRepository->read($dto->email);
 
         // 사용자 검증 및 비밀번호 확인
         if (!$user || !$user->verifyPassword($dto->password)) {
@@ -95,9 +93,7 @@ class AuthenticationService
         }
 
         // 이메일로 사용자 정보 조회
-        $user = $this->userRepository->read([
-            'email' => $email
-        ]);
+        $user = $this->userRepository->read($email);
 
         if (!$user) {
             // 토큰에 있는 이메일의 사용자가 DB에 존재하지 않을 경우

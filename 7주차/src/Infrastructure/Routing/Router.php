@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ginger\Infrastructure\Routing;
 
-use Ginger\Entity\User;
+use Ginger\Entity\UserInterface as User;
 use Ginger\Controller\Middleware\AuthMiddleware;
 use Ginger\Exception\Http\InternalServerErrorException;
 use Ginger\Exception\Http\NotFoundException;

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ginger\Service;
 
-use Ginger\Repository\UserRepository;
+use Ginger\Repository\UserRepositoryInterface as UserRepository;
 use Ginger\DTO\User\UserCreateDTO;
 use Ginger\DTO\User\UserReadDTO;
 use Ginger\DTO\User\UserUpdateDTO;
