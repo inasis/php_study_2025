@@ -27,9 +27,7 @@ class UserService
      */
     public function createUser(UserCreateDTO $dto): UserResponseDTO
     {
-        $user = $this->userRepository->read([
-            'email' => $dto->email,
-        ]);
+        $user = $this->userRepository->read($dto->email);
 
         if ($user) {
             throw new BadRequestException("User already exists.");
@@ -49,9 +47,7 @@ class UserService
      */
     public function readUser(UserReadDTO $dto): UserResponseDTO
     {
-        $user = $this->userRepository->read([
-            'email' => $dto->email,
-        ]);
+        $user = $this->userRepository->read($dto->email);
 
         if (!$user) {
             throw new NotFoundException("User not found");
@@ -68,7 +64,7 @@ class UserService
      */
     public function updateUser(UserUpdateDTO $dto): UserResponseDTO
     {
-        $user = $this->userRepository->read(['email' => $dto->email]);
+        $user = $this->userRepository->read($dto->email);
         
         if (!$user) {
             throw new NotFoundException("User not found");
@@ -96,7 +92,7 @@ class UserService
      */
     public function deleteUser(UserDeleteDTO $dto): void
     {
-        $user = $this->userRepository->read(['email' => $dto->email]);
+        $user = $this->userRepository->read($dto->email);
 
         if (!$user) {
             throw new NotFoundException("User not found");
