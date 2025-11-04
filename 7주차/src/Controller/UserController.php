@@ -2,7 +2,6 @@
 
 namespace Ginger\Controller;
 
-use Exception;
 use Ginger\Service\UserService;
 use Ginger\DTO\User\UserReadDTO;
 use Ginger\DTO\User\UserCreateDTO;
