@@ -6,7 +6,7 @@ namespace Ginger\Infrastructure\Persistence\Repository;
 use Ginger\Repository\PostRepositoryInterface;
 use Ginger\Infrastructure\Persistence\Entity\Post as PostEloquentModel;
 use Ginger\Entity\PostInterface;
-use Ginger\Exception\Infrastructure\DatabaseException; 
+use Ginger\Exception\Infrastructure\DatabaseException;
 use Throwable;
 use Exception;
 
@@ -39,7 +39,7 @@ class PostRepository implements PostRepositoryInterface
                 'content' => $data['content'],
             ]);
             
-            return $post; 
+            return $post;
         } catch (Throwable $e) {
             // ORM 또는 DB에서 발생한 기술적 예외를 잡아 래핑하여 던집니다.
             throw new DatabaseException("Post 생성 중 데이터베이스 오류가 발생했습니다: " . $e->getMessage(), 500, $e);

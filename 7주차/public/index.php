@@ -7,7 +7,7 @@ use Ginger\Bootstrap;
 use Ginger\Infrastructure\Routing\Router;
 use Ginger\Exception\ExceptionHandler;
 
-$container = Bootstrap::initialize(); 
+$container = Bootstrap::initialize();
 
 // 예외 핸들러 등록
 $exceptionHandler = $container->get(ExceptionHandler::class);

@@ -83,7 +83,7 @@ class PostService
     public function updatePost(PostUpdateDTO $dto): PostResponseDTO
     {
         try {
-            $post = $this->postRepository->findById($dto->id);
+            $post = $this->postRepository->read($dto->id);
             
             if (!$post) {
                 throw new NotFoundException("ID {$dto->id}에 해당하는 게시물을 찾을 수 없습니다.");
@@ -132,7 +132,7 @@ class PostService
     {
         try {
             // 먼저 게시물이 존재하는지 확인
-            $post = $this->postRepository->findById($dto->id);
+            $post = $this->postRepository->read($dto->id);
             
             if (!$post) {
                 throw new NotFoundException("ID {$dto->id}에 해당하는 게시물을 찾을 수 없습니다.");

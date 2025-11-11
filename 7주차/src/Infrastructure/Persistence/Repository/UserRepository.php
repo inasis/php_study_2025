@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Ginger\Infrastructure\Persistence\Repository;
 
 use Ginger\Repository\UserRepositoryInterface;
-use Ginger\Exception\Infrastructure\DatabaseException; 
+use Ginger\Exception\Infrastructure\DatabaseException;
 use Ginger\Entity\UserInterface;
 use Ginger\Infrastructure\Persistence\Entity\User as UserEloquentModel;
 use Throwable;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Fondue; 
+namespace Fondue;
 
 use Dotenv\Dotenv;
 use DI\ContainerBuilder;
@@ -13,7 +13,7 @@ class Bootstrap
 {
     public static function initialize(): ContainerInterface
     {
-        self::loadEnvironment(); 
+        self::loadEnvironment();
         DatabaseConnector::boot();
         PostSchemaCreator::createTableIfNotExists();
         return self::initializeDIContainer();

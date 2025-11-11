@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Fondue\Repository;
 
 use Fondue\Entity\Post;
-use Fondue\Exception\Infrastructure\DatabaseException; 
+use Fondue\Exception\Infrastructure\DatabaseException;
 use Exception;
 use Throwable;
 
@@ -18,7 +18,7 @@ class PostRepository implements PostRepositoryInterface
     public function create(array $data): Post
     {
         try {
-            return Post::create($data); 
+            return Post::create($data);
         } catch (Throwable $e) {
             // ORM 또는 DB에서 발생한 기술적 예외를 잡아 500 예외로 래핑하여 던집니다.
             throw new DatabaseException("Post 생성 중 데이터베이스 오류가 발생했습니다.", 500, $e);

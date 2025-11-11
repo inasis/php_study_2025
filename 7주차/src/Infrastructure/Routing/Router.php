@@ -118,7 +118,7 @@ class Router
 
             // 미들웨어가 에러 배열을 반환하면 즉시 체인을 중단하고 에러를 반환합니다.
             if (is_array($result)) {
-                return $result; 
+                return $result;
             }
             
             // User 객체가 반환되면 인증 성공

@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 require(__DIR__ . "/../vendor/autoload.php");
 
-use Fondue\Bootstrap; 
+use Fondue\Bootstrap;
 use Fondue\Infrastructure\Routing\Router;
 use Fondue\Exception\ExceptionHandler;
 
-$container = Bootstrap::initialize(); 
+$container = Bootstrap::initialize();
 
 // 예외 핸들러 등록
 $exceptionHandler = $container->get(ExceptionHandler::class);

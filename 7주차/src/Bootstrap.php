@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Ginger; 
+namespace Ginger;
 
 use Dotenv\Dotenv;
 use DI\ContainerBuilder;
@@ -14,7 +14,7 @@ class Bootstrap
 {
     public static function initialize(): ContainerInterface
     {
-        self::loadEnvironment(); 
+        self::loadEnvironment();
         DatabaseConnector::boot();
         PostSchemaCreator::createTableIfNotExists();
         UserSchemaCreator::createTable();

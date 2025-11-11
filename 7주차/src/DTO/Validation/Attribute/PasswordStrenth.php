@@ -47,7 +47,7 @@ class PasswordStrength implements ValidatorInterface
         // NotNull 검증은 별도 Validator로 존재하고, 문자열이 아닌 경우는 
         // 다른 Validator가 처리하도록 MinLength 등 문자열 전용 검사를 스킵하고 null 반환
         if (!is_string($propertyValue) || trim($propertyValue) === '') {
-            return null; 
+            return null;
         }
         
         $errors = [];

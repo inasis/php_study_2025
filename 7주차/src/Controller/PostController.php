@@ -85,6 +85,6 @@ class PostController
         $this->postService->deletePost($dto);
         
         // 삭제 성공 시 true를 반환하여 호출자가 204 No Content로 응답하도록 유도합니다.
-        return true; 
+        return true;
     }
 }
