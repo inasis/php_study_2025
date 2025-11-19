@@ -1,0 +1,36 @@
+<?php
+declare(strict_types=1);
+
+namespace Hazelnut\Domain\Exception;
+
+use Exception;
+
+class InvalidUpdateException extends Exception
+{
+    public function __construct(
+        string $message = "Invaild Update Context in Post",
+        int $code = 1001,
+        ?\Throwable $previous = null,
+        protected array $context = []
+    ) {
+        parent::__construct($message, $code, $previous);
+        $this->context = $context;
+    }
+
+    /**
+     * 컨텍스트 정보를 반환합니다
+     */
+    public function getContext(): array
+    {
+        return $this->context;
+    }
+
+    /**
+     * 컨텍스트 정보를 추가합니다
+     */
+    public function setContext(array $context): self
+    {
+        $this->context = array_merge($this->context, $context);
+        return $this;
+    }
+}
