@@ -9,8 +9,6 @@ use Hazelnut\Application\UseCase\Post\UpdatePostUseCase;
 use Hazelnut\Application\UseCase\Post\RemovePostUseCase;
 use Hazelnut\Application\DTO\Post\PublishPostCommand;
 use Hazelnut\Application\DTO\Post\UpdatePostCommand;
-use Hazelnut\Application\DTO\Post\PostResultDTO;
-use Hazelnut\Application\Middleware\AuthMiddleware;
 
 /**
  * 게시물 관련 요청을 처리하는 컨트롤러 (프레젠테이션 계층)
