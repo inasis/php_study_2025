@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Hazelnut\Application\DTO\Validation\Constraints;
 
-use Hazelnut\Application\DTO\Validation\ValidatorInterface; // ValidatorInterface 사용
+use Hazelnut\Application\DTO\Validation\ValidatorInterface;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
