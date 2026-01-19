@@ -1,4 +1,3 @@
-// 변경 없음 (이전 답변의 PostBatchReadService 코드 그대로 사용)
 <?php
 declare(strict_types=1);
 
